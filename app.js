@@ -4,6 +4,7 @@
 	function Music(music){
 		this.audioEl = $('<audio src=" "controls="controls" autoplay="true"></audio>');
 		this.musicLibrary = [{src:'不才 - 岁月神偷.mp3'}];//模拟音乐库
+		this.songList = 
 		this.modalEl = $('<div class="uimodal"></div>');
 		this.audioEl.appendTo(document.body);
 		this.modalEl.appendTo(document.body);
@@ -15,10 +16,19 @@
 	}
 	Music.prototype = {
 		_init : function(){
+			var elArr = [];
 			this.audioEl.attr('src',this.src);
 			this.controls = $('<div class="controls"></div>');
-			this.controls.append('<div class="pre">上一首</div><div class="play">播放</div><div class="pause">暂停</div><div class="next">下一首</div><div class="restart">重新播放</div><div class="loop">单曲循环</div><div class="circle_loop">列表循环</div><div class="stop_play">停止播放</div>');
-			this.controls.appendTo(this.modalEl);
+			elArr.push('<div class="pre">上一首</div>');
+			elArr.push('<div class="play">播放</div>');
+			elArr.push('<div class="pause">暂停</div>');
+			elArr.push('<div class="next">下一首</div>');
+			elArr.push('<div class="restart">重新播放</div>');
+			elArr.push('<div class="loop">单曲循环</div>');
+			elArr.push('<div class="circle_loop">列表循环</div>');
+			elArr.push('<div class="stop_play">停止播放</div>');
+			elArr.push('<div class="random_play">随机播放</div>');
+			this.modalEl.append(elArr.join(''));
 			this._defaultSong();
 		},
 		_defaultSong : function(){
@@ -63,6 +73,9 @@
 			this.modalEl.delegate('.stop_play', 'click', function(e) {
 				self._stopPlay();
 			});
+			this.modalEl.delegate('.random_play', 'click', function(e) {
+				self._randomPlay();
+			});
 		},
 		_play : function(){
 			this.audioEl[0].play();
@@ -92,6 +105,14 @@
 		},
 		_reStart : function(){
 			this.audioEl[0].load();
+		},
+		_randomPlay : function(){
+			debugger
+			if(this.audioEl.ended){
+				this.currentIndex = Math.ceil(Math.random()*this.musicLength);
+				this._setSrc(this.musicLibrary[this.currentIndex].src);
+			}
+			
 		}
 
 	}

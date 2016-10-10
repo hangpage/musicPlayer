@@ -1,0 +1,25 @@
+body{
+	background: rgba(0,0,0,.35);
+}
+.player-body{
+	position: absolute;
+    top: 11%;
+    bottom: 18%;
+    left: 10%;
+    right: 10%;
+    min-height: 328px;
+    cursor: default;
+}
+.player-modal{
+	margin-right: 440px;
+}
+.player_songlist__line{
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    opacity: .02;
+}
+.player_songlist{
+	
+}

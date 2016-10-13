@@ -1,4 +1,5 @@
 	//@author zhuzhihang v1.0
+	//@creat by zhuzhihang 2016.9
 	//@parameters music currentIndex
 	function Music(music,currentIndex) {
 	    this.audioEl = $('<audio src=" "controls="controls" autoplay="true"></audio>');

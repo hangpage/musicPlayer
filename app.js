@@ -1,8 +1,8 @@
 	//@author zhuzhihang v1.0
-	//paragrams music:arr[{}]
-	function Music(music) {
+	//@parameters music currentIndex
+	function Music(music,currentIndex) {
 	    this.audioEl = $('<audio src=" "controls="controls" autoplay="true"></audio>');
-	    this.musicLibrary = [{ name: '富士山下', src: '陈奕迅 - 富士山下.mp3' }]; //模拟音乐库
+	    this.musicLibrary = []; //模拟音乐库
 	    this.line = $('<div class="player_songlist__line"></div>');
 	    this.songList = $('<div class="player_songlist"></div>');
 	    this.modalEl = $('<div class="player-modal"></div>');
@@ -14,7 +14,7 @@
 	    this.bodyEl.appendTo(document.body);
 	    this.musicLibrary = music[0] ? this.musicLibrary.concat(music) : this.musicLibrary;
 	    console.log(this.musicLibrary)
-	    this.currentIndex = 0;
+	    this.currentIndex = currentIndex || 0;
 	    this.musicLength = this.musicLibrary.length;
 	    this._init();
 	    this._delegateEvents();
@@ -37,9 +37,17 @@
 	        this._defaultSong();
 	        this._renderList();
 	        this._renderInfo();
+	        this._setTitle();
 	    },
 	    _defaultSong: function() {
 	        this._setSrc(this.musicLibrary[this.currentIndex].src);
+	    },
+	    _setTitle: function(){
+	    	document.title = '正在播放... '+this.musicLibrary[this.currentIndex].name+'';
+	    },
+	    _changeSong: function(){
+	    	this._setTitle();
+	    	this._renderInfo();
 	    },
 	    _renderList: function() {
 	        var els = '<i class="player_songlist__line"></i>';
@@ -52,8 +60,12 @@
 	    _initField: function() {
 
 	    },
+	    _setMode: function(){
+
+	    },
 	    _renderInfo: function(){
 	    	var inforEls = '<div class="song-info-info">';
+	    	inforEls += '<div class="song_info__albumpic"><img class="song_info__pic" src="'+this.musicLibrary[this.currentIndex].albumpic+'"></div>';
 	    	inforEls += '<div class="song_info__name">歌曲名:'+this.musicLibrary[this.currentIndex].name+'</div>';
             inforEls += '<div class="song_info__singer">歌手名:'+this.musicLibrary[this.currentIndex].singer+'</div>';
             inforEls += '<div class="song_info__album">专辑名:'+this.musicLibrary[this.currentIndex].album+'</div>';
@@ -110,13 +122,13 @@
 	        this.currentIndex = this.currentIndex - 1;
 	        this.currentIndex = this.currentIndex < 0 ? (this.musicLength - 1) : this.currentIndex;
 	        this._setSrc(this.musicLibrary[this.currentIndex].src);
-	        this._renderInfo();
+	        this._changeSong();
 	    },
 	    _nextSong: function() {
 	        this.currentIndex = this.currentIndex + 1;
 	        this.currentIndex = this.currentIndex > this.musicLength - 1 ? 0 : this.currentIndex;
 	        this._setSrc(this.musicLibrary[this.currentIndex].src);
-	        this._renderInfo();
+	        this._changeSong();
 	    },
 	    _loop: function() {
 	        this.audioEl.attr('loop', 'true');
@@ -158,8 +170,8 @@
 
 
 	var player = new Music([
-	    { name: "岁月神偷", singer: "不才", src: "不才 - 岁月神偷.mp3", duration: "04:12", photourl: "bucai.jpg" },
-	    { name: "合家欢乐", singer: "凤凰传奇", src: "凤凰传奇 - 合家欢.mp3", duration: "02:39", photourl: "fenghuang.jpg" },
-	    { name: "Butter-Fly", singer: "和田光司 ", src: "和田光司 - Butter-Fly.mp3", duration: "04:17", photourl: "shumabaobei.jpg" }, { name: "一次就好", singer: "杨宗纬 ", src: "杨宗纬 - 一次就好.mp3", duration: "04:26", photourl: "yangzongwei.jpg" }, { name: "向天再借五百年", singer: "韩磊 ", src: "韩磊 - 向天再借五百年.mp3", duration: "03:11", photourl: "wubainian.jpg" }, { name: "富士山下", singer: "Eason ", src: "陈奕迅 - 富士山下.mp3", duration: "", photourl: "" }
+	    { name: "岁月神偷", singer: "不才", src: "不才 - 岁月神偷.mp3", duration: "04:12", albumpic: "imgs/bucai.jpg",album: '暂未添加'},
+	    { name: "合家欢乐", singer: "凤凰传奇", src: "凤凰传奇 - 合家欢.mp3", duration: "02:39", albumpic: "imgs/fenghuang.jpg",album: '暂未添加'},
+	    { name: "Butter-Fly", singer: "和田光司 ", src: "和田光司 - Butter-Fly.mp3", duration: "04:17", albumpic: "imgs/shumabaobei.jpg",album: '暂未添加'}, { name: "一次就好", singer: "杨宗纬 ", src: "杨宗纬 - 一次就好.mp3", duration: "04:26", albumpic: "imgs/yangzongwei.jpg",album: '暂未添加'}, { name: "向天再借五百年", singer: "韩磊 ", src: "韩磊 - 向天再借五百年.mp3", duration: "03:11", albumpic: "imgs/wubainian.jpg",album: '暂未添加'}, { name: "富士山下", singer: "Eason ", src: "陈奕迅 - 富士山下.mp3", duration: "", albumpic: "",albumpic: "imgs/T002R300x300M000003nMzes28P7wv.jpg",album: '暂未添加'}
 
 	]);

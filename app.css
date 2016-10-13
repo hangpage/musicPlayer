@@ -45,3 +45,8 @@ body{
     text-overflow: ellipsis;
     height: 28px;
 }
+.song_info__pic {
+    vertical-align: middle;
+    width: 186px;
+    height: 186px;
+}

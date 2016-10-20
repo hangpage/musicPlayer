@@ -1,5 +1,5 @@
 	//@author zhuzhihang v1.0
-	//@creat by zhuzhihang 2016.9
+	//@created by zhuzhihang 2016.9
 	//@parameters music currentIndex
 	function Music(music,currentIndex) {
 	    this.audioEl = $('<audio src=" "controls="controls" autoplay="true"></audio>');
@@ -19,6 +19,10 @@
 	    this.musicLength = this.musicLibrary.length;
 	    this._init();
 	    this._delegateEvents();
+		this.audioEl[0].addEventListener('loadedmetadata', function() {
+			var that = this;
+			console.log(this.duration)
+		});
 	}
 	Music.prototype = {
 	    _init: function() {

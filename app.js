@@ -138,7 +138,8 @@
 	        this.currentIndex = this.currentIndex > this.musicLength - 1 ? 0 : this.currentIndex;
 	    },
 	    _queuePlay: function() {
-	        this.currentIndex > this.musicLength - 1 ? this._stopPlay : ''; //此处可能有问题 this._stopPlay还是this._stopPlay();
+	        this.currentIndex > this.musicLength - 1 ? this._stopPlay : ''; 
+	        //this._stopPlay || this._stopPlay();
 	        this.currentIndex = 0;
 	    },
 	    _reStart: function() {

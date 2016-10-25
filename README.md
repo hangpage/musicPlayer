@@ -14,7 +14,7 @@ init
 ## duration
 在获得duration需要监听loadedmetadata
 
-` ` ` 
+` ` `
 audio|video.addEventListener("loadedmetadata", function()
   {
   console.log(audio.duration)

@@ -1,9 +1,8 @@
-	//@author zhuzhihang v1.0
-	//@created by zhuzhihang 2016.9
-	//@parameters music currentIndex
+	
 	function Music(music,currentIndex) {
 	    this.audioEl = $('<audio src=" "controls="controls" autoplay="true"></audio>');
 	    this.musicLibrary = []; //模拟音乐库
+		this.songTime = 0;
 	    this.line = $('<div class="player_songlist__line"></div>');
 	    this.songList = $('<div class="player_songlist"></div>');
 	    this.modalEl = $('<div class="player-modal"></div>');
@@ -14,15 +13,10 @@
 	    this.songInfo.appendTo(this.bodyEl);
 	    this.bodyEl.appendTo(document.body);
 	    this.musicLibrary = music[0] ? this.musicLibrary.concat(music) : this.musicLibrary;
-	    console.log(this.musicLibrary)
 	    this.currentIndex = currentIndex || 0;
 	    this.musicLength = this.musicLibrary.length;
 	    this._init();
 	    this._delegateEvents();
-		this.audioEl[0].addEventListener('loadedmetadata', function() {
-			var that = this;
-			console.log(this.duration)
-		});
 	}
 	Music.prototype = {
 	    _init: function() {
@@ -43,6 +37,8 @@
 	        this._renderList();
 	        this._renderInfo();
 	        this._setTitle();
+			/*console.log(this._getDuration());
+			console.log(this.songTime)*/
 	    },
 	    _defaultSong: function() {
 	        this._setSrc(this.musicLibrary[this.currentIndex].src);
@@ -68,12 +64,23 @@
 	    _setMode: function(){
 
 	    },
+		_toTime: function (time) {
+			return time
+		},
+		_getDuration:function () {
+			var time = 0;
+			this.audioEl[0].addEventListener('loadedmetadata', function() {
+				time = this.duration;
+			})
+			return time;
+		},
 	    _renderInfo: function(){
 	    	var inforEls = '<div class="song-info-info">';
 	    	inforEls += '<div class="song_info__albumpic"><img class="song_info__pic" src="'+this.musicLibrary[this.currentIndex].albumpic+'"></div>';
 	    	inforEls += '<div class="song_info__name">歌曲名:'+this.musicLibrary[this.currentIndex].name+'</div>';
             inforEls += '<div class="song_info__singer">歌手名:'+this.musicLibrary[this.currentIndex].singer+'</div>';
             inforEls += '<div class="song_info__album">专辑名:'+this.musicLibrary[this.currentIndex].album+'</div>';
+			inforEls += '<div class="song_info__album">时长:'+this.musicLibrary[this.currentIndex].album+'</div>';
             inforEls += '</div>';
 	        this.songInfo.html(inforEls);
 	    },
